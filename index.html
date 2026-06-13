@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A beginner-friendly tutorial on Git, GitHub, GitHub Actions, and CI/CD — from zero to deploying with confidence." />
+  <title>Git, GitHub & CI/CD Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            accent: { DEFAULT: '#6366f1', light: '#818cf8', dark: '#4f46e5' },
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    details summary { list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    .toc-link.active { color: #6366f1; border-left-color: #6366f1; background-color: rgb(99 102 241 / 0.08); }
+    #mobile-drawer.open { transform: translateX(0); }
+    #overlay.visible { opacity: 1; pointer-events: auto; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
+
+  <!-- Mobile sticky top bar -->
+  <header class="lg:hidden sticky top-0 z-50 bg-zinc-900/95 backdrop-blur border-b border-zinc-800">
+    <div class="flex items-center justify-between px-4 py-3">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-sm font-bold">G</div>
+        <span class="font-semibold text-sm">Git &amp; CI/CD</span>
+      </div>
+      <button id="menu-toggle" aria-label="Open navigation menu" class="p-2 rounded-lg hover:bg-zinc-800 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile overlay -->
+  <div id="overlay" class="lg:hidden fixed inset-0 bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+  <!-- Mobile slide-out drawer -->
+  <aside id="mobile-drawer" class="lg:hidden fixed top-0 left-0 h-full w-72 bg-zinc-900 border-r border-zinc-800 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+    <div class="flex items-center justify-between px-4 py-4 border-b border-zinc-800">
+      <span class="font-semibold">Contents</span>
+      <button id="menu-close" aria-label="Close navigation menu" class="p-2 rounded-lg hover:bg-zinc-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav id="mobile-toc" class="p-4 space-y-1"></nav>
+  </aside>
+
+  <div class="lg:flex lg:min-h-screen">
+
+    <!-- Desktop sticky sidebar -->
+    <aside class="hidden lg:block lg:w-72 lg:shrink-0">
+      <div class="sticky top-0 h-screen overflow-y-auto border-r border-zinc-800 bg-zinc-900/50">
+        <div class="p-6 border-b border-zinc-800">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-lg font-bold">G</div>
+            <div>
+              <h1 class="font-bold text-lg leading-tight">Git &amp; CI/CD</h1>
+              <p class="text-xs text-zinc-400">Beginner Tutorial</p>
+            </div>
+          </div>
+        </div>
+        <nav id="desktop-toc" class="p-4 space-y-1"></nav>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 min-w-0">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-10 py-8 lg:py-12">
+
+        <!-- Hero -->
+        <section class="mb-16">
+          <p class="text-accent font-medium text-sm mb-3 tracking-wide uppercase">Complete Beginner Guide</p>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">Git, GitHub &amp; GitHub Actions for CI/CD</h1>
+          <p class="text-lg text-zinc-400 leading-relaxed">Learn version control, collaboration, and automated pipelines — explained in plain English, with hands-on examples and 100 quiz questions to test your knowledge.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Git Basics</span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">GitHub</span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-violet-500/10 text-violet-300 border border-violet-500/20">GitHub Actions</span>
+            <span class="px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-300 border border-amber-500/20">CI/CD</span>
+          </div>
+        </section>
+
+        <!-- Section 1: Prerequisites -->
+        <section id="prerequisites" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">1. Prerequisites &amp; Setup</h2>
+          <p class="text-zinc-400 mb-8">Everything you need before writing your first commit.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>Before diving into Git and GitHub, make sure you have a few basics in place. Think of this like gathering ingredients before cooking — you don't need to be an expert chef, but you do need a kitchen.</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">What You Should Know</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong class="text-zinc-100">Basic computer skills</strong> — creating folders, installing software, using a text editor.</li>
+              <li><strong class="text-zinc-100">Command line comfort (helpful, not required)</strong> — we'll show you the commands, but GUI tools like GitHub Desktop exist if you prefer clicking over typing.</li>
+              <li><strong class="text-zinc-100">A free GitHub account</strong> — sign up at <a href="https://github.com" class="text-accent hover:underline" target="_blank" rel="noopener">github.com</a>.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Tools to Install</h3>
+            <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
+              <div>
+                <p class="font-medium text-zinc-100">Git (version control software)</p>
+                <p class="text-sm text-zinc-400 mt-1">Download from <a href="https://git-scm.com" class="text-accent hover:underline" target="_blank" rel="noopener">git-scm.com</a>. Verify with:</p>
+                <pre class="mt-2 bg-zinc-950 rounded-lg p-3 text-sm font-mono text-emerald-400 overflow-x-auto"><code>git --version</code></pre>
+              </div>
+              <div>
+                <p class="font-medium text-zinc-100">A code editor</p>
+                <p class="text-sm text-zinc-400 mt-1">VS Code, Cursor, or any editor you like. You'll use it to write code and view diffs.</p>
+              </div>
+              <div>
+                <p class="font-medium text-zinc-100">A modern web browser</p>
+                <p class="text-sm text-zinc-400 mt-1">For browsing GitHub, reviewing pull requests, and checking GitHub Actions run logs.</p>
+              </div>
+            </div>
+
+            <p>[[VISUAL_PLACEHOLDER: Diagram showing the developer toolchain — editor, terminal with Git, browser with GitHub, all connected by arrows]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">First-Time Git Configuration</h3>
+            <p>Git needs to know who you are so it can label your work. Run these once after installing Git:</p>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Tell Git your name and email</span>
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+<span class="text-zinc-500"># Set default branch name to 'main'</span>
+git config --global init.defaultBranch main</code></pre>
+          </div>
+
+          <div id="quiz-prerequisites" class="quiz-container mt-10" data-section="prerequisites"></div>
+        </section>
+
+        <!-- Section 2: CI/CD -->
+        <section id="cicd-intro" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">2. CI/CD: The Big Picture</h2>
+          <p class="text-zinc-400 mb-8">Why automation matters and how it fits into modern software delivery.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>Imagine you're baking cookies for a bake sale. Every time you change the recipe, you'd taste-test before selling — that's <strong class="text-zinc-100">quality checking</strong>. If the cookies pass, you'd box them up and deliver them — that's <strong class="text-zinc-100">delivery</strong>. CI/CD automates both steps for software.</p>
+
+            <div class="grid sm:grid-cols-2 gap-4 my-6">
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+                <p class="text-accent font-semibold mb-2">CI — Continuous Integration</p>
+                <p class="text-sm">Every time someone pushes code, automated tests run to catch bugs early. Like a spell-checker that runs on every paragraph you write.</p>
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+                <p class="text-emerald-400 font-semibold mb-2">CD — Continuous Delivery / Deployment</p>
+                <p class="text-sm">Once tests pass, code can be automatically packaged and deployed to staging or production. Like an assembly line that ships products once they pass inspection.</p>
+              </div>
+            </div>
+
+            <p>[[VISUAL_PLACEHOLDER: CI/CD pipeline flowchart — Developer pushes code → CI runs tests → CD deploys to server → Users see update]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Why Teams Use CI/CD</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong class="text-zinc-100">Catch bugs faster</strong> — broken code is detected within minutes, not days.</li>
+              <li><strong class="text-zinc-100">Ship confidently</strong> — if the pipeline is green, you know the basics work.</li>
+              <li><strong class="text-zinc-100">Reduce manual work</strong> — no more "works on my machine" deploy rituals at 2 AM.</li>
+              <li><strong class="text-zinc-100">Enable collaboration</strong> — many developers can work in parallel without stepping on each other.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Where Git, GitHub &amp; Actions Fit In</h3>
+            <p><strong class="text-zinc-100">Git</strong> tracks every change to your code. <strong class="text-zinc-100">GitHub</strong> hosts that history online and lets teams collaborate. <strong class="text-zinc-100">GitHub Actions</strong> is GitHub's built-in automation engine — it watches for events (like a push) and runs your CI/CD pipeline in the cloud.</p>
+          </div>
+
+          <div id="quiz-cicd-intro" class="quiz-container mt-10" data-section="cicd-intro"></div>
+        </section>
+
+        <!-- Section 3: Git Basics -->
+        <section id="git-basics" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">3. Git: Version Control Basics</h2>
+          <p class="text-zinc-400 mb-8">Understanding snapshots, history, and the local repository.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>Git is a <strong class="text-zinc-100">version control system</strong>. Think of it as an unlimited "Undo" button for your entire project — but smarter. Instead of one undo, Git saves a timeline of every saved state (called a <strong class="text-zinc-100">commit</strong>), who made it, and why.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Timeline diagram showing commits as dots on a line, each labeled with a message and author]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Key Concepts</h3>
+            <div class="space-y-3">
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                <p class="font-medium text-zinc-100">Repository (repo)</p>
+                <p class="text-sm text-zinc-400 mt-1">A folder that Git tracks. It contains your files plus a hidden <code class="text-accent">.git</code> directory with the full history.</p>
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                <p class="font-medium text-zinc-100">Working Directory → Staging → Commit</p>
+                <p class="text-sm text-zinc-400 mt-1">You edit files (working directory), choose what to save next (<code class="text-accent">git add</code> → staging area), then permanently snapshot (<code class="text-accent">git commit</code>).</p>
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                <p class="font-medium text-zinc-100">Commit</p>
+                <p class="text-sm text-zinc-400 mt-1">A saved checkpoint with a unique ID (hash), a message describing the change, and a timestamp.</p>
+              </div>
+            </div>
+
+            <p>[[VISUAL_PLACEHOLDER: Three-box diagram — Working Directory, Staging Area, Repository — with arrows labeled git add and git commit]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Essential Commands</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Create a new repo in the current folder</span>
+git init
+
+<span class="text-zinc-500"># Check what's changed</span>
+git status
+
+<span class="text-zinc-500"># Stage a file</span>
+git add index.html
+
+<span class="text-zinc-500"># Commit with a message</span>
+git commit -m "Add landing page"
+
+<span class="text-zinc-500"># View commit history</span>
+git log --oneline</code></pre>
+
+            <div class="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4 text-sm">
+              <p class="text-indigo-300 font-medium">💡 Tip: Write commit messages like short story titles — "Fix login button color" not "stuff". Future you (and your teammates) will thank you.</p>
+            </div>
+          </div>
+
+          <div id="quiz-git-basics" class="quiz-container mt-10" data-section="git-basics"></div>
+        </section>
+
+        <!-- Section 4: GitHub Essentials -->
+        <section id="github-essentials" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">4. GitHub: Your Project's Home in the Cloud</h2>
+          <p class="text-zinc-400 mb-8">From local folders to shared, backed-up repositories.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>If Git is the engine, <strong class="text-zinc-100">GitHub</strong> is the garage where you park and share your project. It's a website (and much more) that stores Git repositories online, adds collaboration tools, and connects to automation like GitHub Actions.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Illustration comparing local Git repo on a laptop vs. remote GitHub repo in the cloud, connected by sync arrows]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Local vs. Remote</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong class="text-zinc-100">Local repository</strong> — lives on your computer. Fast, works offline.</li>
+              <li><strong class="text-zinc-100">Remote repository</strong> — lives on GitHub's servers. Backed up, shareable, triggers CI/CD.</li>
+              <li><strong class="text-zinc-100">Origin</strong> — the default name for your primary remote on GitHub.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Creating &amp; Connecting a Repo</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># On GitHub: click "New repository", then locally:</span>
+git remote add origin https://github.com/username/my-project.git
+git push -u origin main</code></pre>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Core GitHub Features</h3>
+            <div class="grid sm:grid-cols-2 gap-3">
+              <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-sm"><strong class="text-zinc-100">Issues</strong><br/><span class="text-zinc-400">Track bugs, ideas, and tasks.</span></div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-sm"><strong class="text-zinc-100">Pull Requests</strong><br/><span class="text-zinc-400">Propose and review code changes.</span></div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-sm"><strong class="text-zinc-100">Actions</strong><br/><span class="text-zinc-400">Automate CI/CD workflows.</span></div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-sm"><strong class="text-zinc-100">Pages</strong><br/><span class="text-zinc-400">Host static websites for free.</span></div>
+            </div>
+          </div>
+
+          <div id="quiz-github-essentials" class="quiz-container mt-10" data-section="github-essentials"></div>
+        </section>
+
+        <!-- Section 5: Repositories -->
+        <section id="repositories" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">5. Working with Repositories</h2>
+          <p class="text-zinc-400 mb-8">Clone, pull, push, and keep your local copy in sync.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>Day-to-day GitHub work is a rhythm: <strong class="text-zinc-100">pull</strong> the latest changes, make edits, <strong class="text-zinc-100">commit</strong> locally, then <strong class="text-zinc-100">push</strong> back to GitHub. It's like borrowing a shared notebook, writing your page, and returning it to the shelf.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Sync cycle diagram — pull down → edit → commit → push up, looping between local and remote]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Clone an Existing Project</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code>git clone https://github.com/username/project.git
+cd project</code></pre>
+            <p>This downloads the entire history — not just the latest files — so you have the full timeline locally.</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Daily Sync Commands</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Get latest changes from GitHub</span>
+git pull origin main
+
+<span class="text-zinc-500"># Send your commits to GitHub</span>
+git push origin main</code></pre>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Handling Merge Conflicts</h3>
+            <p>A <strong class="text-zinc-100">merge conflict</strong> happens when two people edit the same lines differently. Git pauses and asks you to pick the correct version. Open the conflicted file, look for markers like <code class="text-accent">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, choose the right code, then commit the resolution.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Side-by-side diff view showing conflict markers and resolved merge]]</p>
+          </div>
+
+          <div id="quiz-repositories" class="quiz-container mt-10" data-section="repositories"></div>
+        </section>
+
+        <!-- Section 6: Branching -->
+        <section id="branching" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">6. Branching &amp; Collaboration</h2>
+          <p class="text-zinc-400 mb-8">Parallel timelines for safe, isolated development.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>A <strong class="text-zinc-100">branch</strong> is an independent line of development. Imagine writing a draft chapter in a separate notebook while the published book stays untouched. When the draft is ready, you merge it back into the main story.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Branch diagram — main branch as a straight line, feature branch splitting off and merging back]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Branch Workflow</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Create and switch to a new branch</span>
+git checkout -b feature/login-page
+
+<span class="text-zinc-500"># ... make changes, commit ...</span>
+
+<span class="text-zinc-500"># Push branch to GitHub</span>
+git push -u origin feature/login-page
+
+<span class="text-zinc-500"># Switch back to main</span>
+git checkout main</code></pre>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Naming Conventions</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><code class="text-accent">feature/add-search</code> — new functionality</li>
+              <li><code class="text-accent">fix/broken-navbar</code> — bug fixes</li>
+              <li><code class="text-accent">docs/update-readme</code> — documentation only</li>
+            </ul>
+
+            <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-sm">
+              <p class="text-emerald-300 font-medium">Best practice: Never commit directly to <code>main</code> on team projects. Always use a branch and pull request.</p>
+            </div>
+          </div>
+
+          <div id="quiz-branching" class="quiz-container mt-10" data-section="branching"></div>
+        </section>
+
+        <!-- Section 7: Pull Requests -->
+        <section id="pull-requests" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">7. Pull Requests &amp; Code Review</h2>
+          <p class="text-zinc-400 mb-8">How teams propose, discuss, and merge changes safely.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>A <strong class="text-zinc-100">Pull Request (PR)</strong> is a formal proposal: "Here are my changes — please review before merging into main." It's the heart of team collaboration on GitHub, and it's where CI pipelines often run automatically.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Pull request UI mockup showing changed files, review comments, and CI check status]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">The PR Lifecycle</h3>
+            <ol class="list-decimal pl-6 space-y-2">
+              <li>Create a branch and push your commits.</li>
+              <li>Open a Pull Request on GitHub, describing <em>what</em> and <em>why</em>.</li>
+              <li>Automated CI checks run (tests, linting, build).</li>
+              <li>Teammates review code and leave comments.</li>
+              <li>Once approved and checks pass, merge into <code class="text-accent">main</code>.</li>
+              <li>Delete the feature branch — it's served its purpose.</li>
+            </ol>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Writing Good PR Descriptions</h3>
+            <p>Include context a reviewer needs: the problem you're solving, how you solved it, and how to test it. Link related issues with keywords like <code class="text-accent">Fixes #42</code> to auto-close them on merge.</p>
+          </div>
+
+          <div id="quiz-pull-requests" class="quiz-container mt-10" data-section="pull-requests"></div>
+        </section>
+
+        <!-- Section 8: GitHub Actions Intro -->
+        <section id="actions-intro" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">8. Introduction to GitHub Actions</h2>
+          <p class="text-zinc-400 mb-8">Your project's robot assistant in the cloud.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p><strong class="text-zinc-100">GitHub Actions</strong> lets you automate tasks when things happen in your repository — push code, open a PR, schedule a cron job. GitHub spins up a temporary virtual machine (called a <strong class="text-zinc-100">runner</strong>), runs your instructions, and reports pass/fail.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: GitHub Actions architecture — Event triggers Workflow → Jobs → Steps on Runners]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Core Terminology</h3>
+            <div class="space-y-3">
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm">
+                <strong class="text-zinc-100">Workflow</strong> — a YAML file defining the automation (lives in <code class="text-accent">.github/workflows/</code>).
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm">
+                <strong class="text-zinc-100">Event</strong> — what triggers the workflow (e.g., <code class="text-accent">push</code>, <code class="text-accent">pull_request</code>).
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm">
+                <strong class="text-zinc-100">Job</strong> — a group of steps that run on the same runner.
+              </div>
+              <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm">
+                <strong class="text-zinc-100">Step</strong> — a single task (run a command or use an Action from the marketplace).
+              </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Hello World Workflow</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># .github/workflows/hello.yml</span>
+<span class="text-violet-400">name:</span> Hello CI
+<span class="text-violet-400">on:</span> [push]
+<span class="text-violet-400">jobs:</span>
+  <span class="text-emerald-400">greet:</span>
+    <span class="text-violet-400">runs-on:</span> ubuntu-latest
+    <span class="text-violet-400">steps:</span>
+      - <span class="text-violet-400">uses:</span> actions/checkout@v4
+      - <span class="text-violet-400">run:</span> echo "Hello from GitHub Actions!"</code></pre>
+          </div>
+
+          <div id="quiz-actions-intro" class="quiz-container mt-10" data-section="actions-intro"></div>
+        </section>
+
+        <!-- Section 9: CI Pipelines -->
+        <section id="ci-pipelines" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">9. Building CI Pipelines</h2>
+          <p class="text-zinc-400 mb-8">Automated testing and quality gates on every change.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>A <strong class="text-zinc-100">CI pipeline</strong> typically: checks out your code, installs dependencies, runs linters, runs tests, and maybe builds the project. If any step fails, the workflow turns red and the PR is blocked from merging.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: CI pipeline stages — Checkout → Install → Lint → Test → Build, with pass/fail indicators]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Example: Node.js CI</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-violet-400">name:</span> Node CI
+<span class="text-violet-400">on:</span>
+  <span class="text-emerald-400">push:</span>
+    <span class="text-emerald-400">branches:</span> [main]
+  <span class="text-emerald-400">pull_request:</span>
+    <span class="text-emerald-400">branches:</span> [main]
+<span class="text-violet-400">jobs:</span>
+  <span class="text-emerald-400">test:</span>
+    <span class="text-violet-400">runs-on:</span> ubuntu-latest
+    <span class="text-violet-400">steps:</span>
+      - <span class="text-violet-400">uses:</span> actions/checkout@v4
+      - <span class="text-violet-400">uses:</span> actions/setup-node@v4
+        <span class="text-violet-400">with:</span>
+          <span class="text-emerald-400">node-version:</span> '20'
+      - <span class="text-violet-400">run:</span> npm ci
+      - <span class="text-violet-400">run:</span> npm test</code></pre>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Matrix Builds</h3>
+            <p>Test across multiple versions simultaneously using a <strong class="text-zinc-100">strategy matrix</strong>. For example, run tests on Node 18 and Node 20 in parallel — catching version-specific bugs early.</p>
+          </div>
+
+          <div id="quiz-ci-pipelines" class="quiz-container mt-10" data-section="ci-pipelines"></div>
+        </section>
+
+        <!-- Section 10: CD & Pages -->
+        <section id="cd-deployment" class="tutorial-section mb-20">
+          <h2 class="text-2xl sm:text-3xl font-bold mb-2">10. CD, Deployment &amp; GitHub Pages</h2>
+          <p class="text-zinc-400 mb-8">From green CI checks to live websites.</p>
+
+          <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
+            <p>Once CI passes, <strong class="text-zinc-100">Continuous Deployment</strong> takes over — automatically publishing your site or app. <strong class="text-zinc-100">GitHub Pages</strong> is perfect for static sites (HTML, CSS, JS) like this very tutorial.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: CD flow — merge to main → Actions deploy job → GitHub Pages URL goes live]]</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Deploy with GitHub Actions</h3>
+            <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-violet-400">name:</span> Deploy to Pages
+<span class="text-violet-400">on:</span>
+  <span class="text-emerald-400">push:</span>
+    <span class="text-emerald-400">branches:</span> [main]
+<span class="text-violet-400">permissions:</span>
+  <span class="text-emerald-400">contents:</span> read
+  <span class="text-emerald-400">pages:</span> write
+  <span class="text-emerald-400">id-token:</span> write
+<span class="text-violet-400">jobs:</span>
+  <span class="text-emerald-400">deploy:</span>
+    <span class="text-violet-400">runs-on:</span> ubuntu-latest
+    <span class="text-violet-400">steps:</span>
+      - <span class="text-violet-400">uses:</span> actions/checkout@v4
+      - <span class="text-violet-400">uses:</span> actions/upload-pages-artifact@v3
+        <span class="text-violet-400">with:</span>
+          <span class="text-emerald-400">path:</span> '.'
+      - <span class="text-violet-400">uses:</span> actions/deploy-pages@v4</code></pre>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Environments &amp; Approvals</h3>
+            <p>For production deploys, use GitHub <strong class="text-zinc-100">Environments</strong> with required reviewers. Staging can auto-deploy; production waits for a human to click "Approve."</p>
+
+            <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Secrets in CI/CD</h3>
+            <p>Never hardcode API keys in workflow files. Store them in <strong class="text-zinc-100">Repository Secrets</strong> (<code class="text-accent">Settings → Secrets → Actions</code>) and reference them as <code class="text-accent">${{ secrets.MY_KEY }}</code>.</p>
+
+            <p>[[VISUAL_PLACEHOLDER: Secrets flow diagram — encrypted in GitHub Settings, injected at runtime into workflow, never logged]]</p>
+
+            <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-sm mt-6">
+              <p class="text-amber-300 font-medium">🎉 Congratulations! You now understand the full journey: write code with Git, collaborate on GitHub, automate quality with Actions, and ship with CI/CD.</p>
+            </div>
+          </div>
+
+          <div id="quiz-cd-deployment" class="quiz-container mt-10" data-section="cd-deployment"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t border-zinc-800 pt-8 pb-12 text-center text-sm text-zinc-500">
+          <p>Built with Git, hosted on GitHub Pages, styled with Tailwind CSS.</p>
+          <p class="mt-2">100 quiz questions · 10 sections · Beginner friendly</p>
+        </footer>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
