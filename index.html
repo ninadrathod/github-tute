@@ -30,6 +30,8 @@
     .toc-link.active { color: #6366f1; border-left-color: #6366f1; background-color: rgb(99 102 241 / 0.08); }
     #mobile-drawer.open { transform: translateX(0); }
     #overlay.visible { opacity: 1; pointer-events: auto; }
+    .diagram svg { width: 100%; height: auto; display: block; }
+    .diagram text { font-family: Inter, system-ui, sans-serif; }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 font-sans antialiased">
@@ -128,7 +130,36 @@
               </div>
             </div>
 
-            <p>[[VISUAL_PLACEHOLDER: Diagram showing the developer toolchain — editor, terminal with Git, browser with GitHub, all connected by arrows]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 220" role="img" aria-labelledby="fig-toolchain-title">
+                <title id="fig-toolchain-title">Developer toolchain</title>
+                <defs>
+                  <marker id="arrow-indigo" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6366f1"/></marker>
+                </defs>
+                <!-- Editor -->
+                <rect x="30" y="60" width="160" height="100" rx="12" fill="#18181b" stroke="#3f3f46"/>
+                <text x="110" y="95" text-anchor="middle" fill="#a1a1aa" font-size="12">Code Editor</text>
+                <text x="110" y="118" text-anchor="middle" fill="#6366f1" font-size="11" font-weight="600">VS Code / Cursor</text>
+                <rect x="55" y="130" width="110" height="8" rx="2" fill="#27272a"/><rect x="55" y="145" width="80" height="8" rx="2" fill="#27272a"/>
+                <!-- Terminal / Git -->
+                <rect x="280" y="60" width="160" height="100" rx="12" fill="#18181b" stroke="#3f3f46"/>
+                <text x="360" y="95" text-anchor="middle" fill="#a1a1aa" font-size="12">Terminal</text>
+                <text x="360" y="118" text-anchor="middle" fill="#34d399" font-size="11" font-family="monospace">git commit -m "..."</text>
+                <rect x="305" y="135" width="110" height="20" rx="4" fill="#09090b" stroke="#27272a"/>
+                <text x="315" y="149" fill="#34d399" font-size="9" font-family="monospace">$ git push</text>
+                <!-- Browser / GitHub -->
+                <rect x="530" y="60" width="160" height="100" rx="12" fill="#18181b" stroke="#3f3f46"/>
+                <text x="610" y="95" text-anchor="middle" fill="#a1a1aa" font-size="12">Browser</text>
+                <text x="610" y="118" text-anchor="middle" fill="#818cf8" font-size="11" font-weight="600">github.com</text>
+                <circle cx="580" cy="140" r="6" fill="#6366f1"/><circle cx="600" cy="140" r="6" fill="#27272a"/><circle cx="620" cy="140" r="6" fill="#27272a"/>
+                <!-- Arrows -->
+                <line x1="190" y1="110" x2="275" y2="110" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow-indigo)"/>
+                <line x1="440" y1="110" x2="525" y2="110" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow-indigo)"/>
+                <text x="232" y="100" text-anchor="middle" fill="#71717a" font-size="10">write &amp; save</text>
+                <text x="482" y="100" text-anchor="middle" fill="#71717a" font-size="10">push / PR</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Your daily loop: edit code locally, version it with Git, collaborate on GitHub.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">First-Time Git Configuration</h3>
             <p>Git needs to know who you are so it can label your work. Run these once after installing Git:</p>
@@ -162,7 +193,47 @@ git config --global init.defaultBranch main</code></pre>
               </div>
             </div>
 
-            <p>[[VISUAL_PLACEHOLDER: CI/CD pipeline flowchart — Developer pushes code → CI runs tests → CD deploys to server → Users see update]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 200" role="img" aria-labelledby="fig-cicd-title">
+                <title id="fig-cicd-title">CI/CD pipeline flow</title>
+                <defs>
+                  <marker id="arrow-emerald" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+                </defs>
+                <!-- Step boxes -->
+                <g>
+                  <rect x="20" y="70" width="120" height="70" rx="10" fill="#18181b" stroke="#6366f1"/>
+                  <text x="80" y="100" text-anchor="middle" fill="#e4e4e7" font-size="11" font-weight="600">Developer</text>
+                  <text x="80" y="118" text-anchor="middle" fill="#a1a1aa" font-size="10">Pushes code</text>
+                </g>
+                <line x1="140" y1="105" x2="165" y2="105" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)"/>
+                <g>
+                  <rect x="170" y="70" width="120" height="70" rx="10" fill="#18181b" stroke="#6366f1"/>
+                  <text x="230" y="100" text-anchor="middle" fill="#6366f1" font-size="11" font-weight="600">CI</text>
+                  <text x="230" y="118" text-anchor="middle" fill="#a1a1aa" font-size="10">Run tests &amp; lint</text>
+                </g>
+                <line x1="290" y1="105" x2="315" y2="105" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)"/>
+                <g>
+                  <rect x="320" y="70" width="120" height="70" rx="10" fill="#18181b" stroke="#34d399"/>
+                  <text x="380" y="100" text-anchor="middle" fill="#34d399" font-size="11" font-weight="600">CD</text>
+                  <text x="380" y="118" text-anchor="middle" fill="#a1a1aa" font-size="10">Deploy build</text>
+                </g>
+                <line x1="440" y1="105" x2="465" y2="105" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)"/>
+                <g>
+                  <rect x="470" y="70" width="120" height="70" rx="10" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="530" y="100" text-anchor="middle" fill="#e4e4e7" font-size="11" font-weight="600">Server / Pages</text>
+                  <text x="530" y="118" text-anchor="middle" fill="#a1a1aa" font-size="10">Live site</text>
+                </g>
+                <line x1="590" y1="105" x2="615" y2="105" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)"/>
+                <g>
+                  <rect x="620" y="70" width="80" height="70" rx="10" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="660" y="105" text-anchor="middle" fill="#e4e4e7" font-size="11" font-weight="600">Users</text>
+                  <text x="660" y="122" text-anchor="middle" fill="#a1a1aa" font-size="10">✓ update</text>
+                </g>
+                <!-- Pass/fail indicator on CI -->
+                <circle cx="230" cy="55" r="10" fill="#34d399"/><text x="230" y="59" text-anchor="middle" fill="#09090b" font-size="10" font-weight="700">✓</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Every push triggers automated checks (CI), then ships approved code (CD) to users.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Why Teams Use CI/CD</h3>
             <ul class="list-disc pl-6 space-y-2">
@@ -187,7 +258,27 @@ git config --global init.defaultBranch main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>Git is a <strong class="text-zinc-100">version control system</strong>. Think of it as an unlimited "Undo" button for your entire project — but smarter. Instead of one undo, Git saves a timeline of every saved state (called a <strong class="text-zinc-100">commit</strong>), who made it, and why.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Timeline diagram showing commits as dots on a line, each labeled with a message and author]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 160" role="img" aria-labelledby="fig-commits-title">
+                <title id="fig-commits-title">Git commit timeline</title>
+                <line x1="60" y1="80" x2="660" y2="80" stroke="#3f3f46" stroke-width="3"/>
+                <!-- Commits -->
+                <circle cx="100" cy="80" r="12" fill="#6366f1" stroke="#818cf8" stroke-width="2"/>
+                <text x="100" y="55" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Initial commit</text>
+                <text x="100" y="115" text-anchor="middle" fill="#71717a" font-size="9">Alex · Jan 2</text>
+                <circle cx="240" cy="80" r="12" fill="#6366f1" stroke="#818cf8" stroke-width="2"/>
+                <text x="240" y="55" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Add navbar</text>
+                <text x="240" y="115" text-anchor="middle" fill="#71717a" font-size="9">Sam · Jan 5</text>
+                <circle cx="400" cy="80" r="12" fill="#6366f1" stroke="#818cf8" stroke-width="2"/>
+                <text x="400" y="55" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Fix login bug</text>
+                <text x="400" y="115" text-anchor="middle" fill="#71717a" font-size="9">Alex · Jan 8</text>
+                <circle cx="560" cy="80" r="12" fill="#34d399" stroke="#6ee7b7" stroke-width="2"/>
+                <text x="560" y="55" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Deploy v1.0</text>
+                <text x="560" y="115" text-anchor="middle" fill="#71717a" font-size="9">Sam · Jan 10</text>
+                <text x="660" y="85" fill="#52525b" font-size="11">→</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Each dot is a commit — a permanent snapshot with a message, author, and timestamp.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Key Concepts</h3>
             <div class="space-y-3">
@@ -205,7 +296,34 @@ git config --global init.defaultBranch main</code></pre>
               </div>
             </div>
 
-            <p>[[VISUAL_PLACEHOLDER: Three-box diagram — Working Directory, Staging Area, Repository — with arrows labeled git add and git commit]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 200" role="img" aria-labelledby="fig-staging-title">
+                <title id="fig-staging-title">Git working directory, staging, and repository</title>
+                <defs>
+                  <marker id="arrow-add" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#818cf8"/></marker>
+                  <marker id="arrow-commit" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+                </defs>
+                <rect x="40" y="50" width="180" height="110" rx="12" fill="#18181b" stroke="#52525b"/>
+                <text x="130" y="85" text-anchor="middle" fill="#e4e4e7" font-size="12" font-weight="600">Working Directory</text>
+                <text x="130" y="105" text-anchor="middle" fill="#71717a" font-size="10">Files you edit</text>
+                <rect x="70" y="115" width="120" height="30" rx="4" fill="#27272a" stroke="#3f3f46"/>
+                <text x="130" y="134" text-anchor="middle" fill="#a1a1aa" font-size="9" font-family="monospace">index.html *</text>
+                <line x1="220" y1="105" x2="265" y2="105" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-add)"/>
+                <text x="242" y="95" text-anchor="middle" fill="#818cf8" font-size="10" font-weight="600">git add</text>
+                <rect x="270" y="50" width="180" height="110" rx="12" fill="#18181b" stroke="#6366f1"/>
+                <text x="360" y="85" text-anchor="middle" fill="#6366f1" font-size="12" font-weight="600">Staging Area</text>
+                <text x="360" y="105" text-anchor="middle" fill="#71717a" font-size="10">Ready to snapshot</text>
+                <rect x="300" y="115" width="120" height="30" rx="4" fill="#312e81" stroke="#6366f1"/>
+                <text x="360" y="134" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">index.html ✓</text>
+                <line x1="450" y1="105" x2="495" y2="105" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-commit)"/>
+                <text x="472" y="95" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">git commit</text>
+                <rect x="500" y="50" width="180" height="110" rx="12" fill="#18181b" stroke="#34d399"/>
+                <text x="590" y="85" text-anchor="middle" fill="#34d399" font-size="12" font-weight="600">Repository</text>
+                <text x="590" y="105" text-anchor="middle" fill="#71717a" font-size="10">Permanent history</text>
+                <circle cx="560" cy="130" r="8" fill="#6366f1"/><circle cx="590" cy="130" r="8" fill="#6366f1"/><circle cx="620" cy="130" r="8" fill="#34d399"/>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Edit files → stage selected changes → commit a permanent snapshot to history.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Essential Commands</h3>
             <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Create a new repo in the current folder</span>
@@ -239,7 +357,38 @@ git log --oneline</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>If Git is the engine, <strong class="text-zinc-100">GitHub</strong> is the garage where you park and share your project. It's a website (and much more) that stores Git repositories online, adds collaboration tools, and connects to automation like GitHub Actions.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Illustration comparing local Git repo on a laptop vs. remote GitHub repo in the cloud, connected by sync arrows]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 240" role="img" aria-labelledby="fig-local-remote-title">
+                <title id="fig-local-remote-title">Local vs remote Git repository</title>
+                <defs>
+                  <marker id="arrow-sync-up" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#6366f1"/></marker>
+                  <marker id="arrow-sync-down" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+                </defs>
+                <!-- Laptop -->
+                <rect x="60" y="40" width="220" height="160" rx="12" fill="#18181b" stroke="#3f3f46"/>
+                <text x="170" y="70" text-anchor="middle" fill="#e4e4e7" font-size="13" font-weight="600">Your Laptop</text>
+                <text x="170" y="90" text-anchor="middle" fill="#71717a" font-size="10">Local Repository</text>
+                <rect x="90" y="105" width="160" height="70" rx="6" fill="#09090b" stroke="#27272a"/>
+                <text x="105" y="125" fill="#34d399" font-size="9" font-family="monospace">.git/</text>
+                <text x="105" y="142" fill="#a1a1aa" font-size="9" font-family="monospace">src/</text>
+                <text x="105" y="159" fill="#a1a1aa" font-size="9" font-family="monospace">README.md</text>
+                <!-- Cloud -->
+                <ellipse cx="530" cy="55" rx="70" ry="35" fill="#312e81" opacity="0.4"/>
+                <ellipse cx="560" cy="45" rx="50" ry="28" fill="#312e81" opacity="0.3"/>
+                <rect x="410" y="40" width="220" height="160" rx="12" fill="#18181b" stroke="#6366f1"/>
+                <text x="520" y="70" text-anchor="middle" fill="#818cf8" font-size="13" font-weight="600">GitHub Cloud</text>
+                <text x="520" y="90" text-anchor="middle" fill="#71717a" font-size="10">Remote (origin)</text>
+                <rect x="440" y="105" width="160" height="70" rx="6" fill="#09090b" stroke="#4338ca"/>
+                <text x="455" y="125" fill="#818cf8" font-size="9" font-family="monospace">github.com/you/repo</text>
+                <text x="455" y="142" fill="#a1a1aa" font-size="9">Issues · PRs · Actions</text>
+                <!-- Sync arrows -->
+                <path d="M 290 120 Q 360 90 400 120" fill="none" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow-sync-up)"/>
+                <text x="360" y="85" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">git push</text>
+                <path d="M 400 150 Q 360 180 290 150" fill="none" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-sync-down)"/>
+                <text x="360" y="195" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">git pull / clone</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Git runs locally; GitHub hosts a remote copy you sync with push and pull.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Local vs. Remote</h3>
             <ul class="list-disc pl-6 space-y-2">
@@ -273,7 +422,38 @@ git push -u origin main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>Day-to-day GitHub work is a rhythm: <strong class="text-zinc-100">pull</strong> the latest changes, make edits, <strong class="text-zinc-100">commit</strong> locally, then <strong class="text-zinc-100">push</strong> back to GitHub. It's like borrowing a shared notebook, writing your page, and returning it to the shelf.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Sync cycle diagram — pull down → edit → commit → push up, looping between local and remote]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 260" role="img" aria-labelledby="fig-sync-title">
+                <title id="fig-sync-title">Git sync cycle</title>
+                <defs>
+                  <marker id="arrow-cycle" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#818cf8"/></marker>
+                </defs>
+                <!-- Center remote -->
+                <rect x="290" y="20" width="140" height="55" rx="10" fill="#312e81" stroke="#6366f1"/>
+                <text x="360" y="45" text-anchor="middle" fill="#c7d2fe" font-size="11" font-weight="600">GitHub (remote)</text>
+                <text x="360" y="62" text-anchor="middle" fill="#a1a1aa" font-size="9">origin / main</text>
+                <!-- Local -->
+                <rect x="290" y="185" width="140" height="55" rx="10" fill="#18181b" stroke="#3f3f46"/>
+                <text x="360" y="210" text-anchor="middle" fill="#e4e4e7" font-size="11" font-weight="600">Local repo</text>
+                <text x="360" y="227" text-anchor="middle" fill="#a1a1aa" font-size="9">your machine</text>
+                <!-- Side steps -->
+                <rect x="520" y="95" width="120" height="45" rx="8" fill="#18181b" stroke="#52525b"/>
+                <text x="580" y="115" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Edit files</text>
+                <text x="580" y="130" text-anchor="middle" fill="#71717a" font-size="9">write code</text>
+                <rect x="80" y="95" width="120" height="45" rx="8" fill="#18181b" stroke="#52525b"/>
+                <text x="140" y="115" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">git commit</text>
+                <text x="140" y="130" text-anchor="middle" fill="#71717a" font-size="9">save snapshot</text>
+                <!-- Arrows clockwise -->
+                <line x1="360" y1="75" x2="360" y2="180" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-cycle)"/>
+                <text x="375" y="130" fill="#34d399" font-size="10" font-weight="600">git pull</text>
+                <line x1="430" y1="210" x2="515" y2="130" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-cycle)"/>
+                <line x1="515" y1="105" x2="430" y2="50" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-cycle)"/>
+                <line x1="290" y1="50" x2="205" y2="105" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow-cycle)"/>
+                <line x1="205" y1="130" x2="290" y2="210" stroke="#6366f1" stroke-width="2" marker-end="url(#arrow-cycle)"/>
+                <text x="248" y="72" fill="#6366f1" font-size="10" font-weight="600">git push</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Daily rhythm: pull latest → edit → commit → push back to GitHub.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Clone an Existing Project</h3>
             <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code>git clone https://github.com/username/project.git
@@ -290,7 +470,32 @@ git push origin main</code></pre>
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Handling Merge Conflicts</h3>
             <p>A <strong class="text-zinc-100">merge conflict</strong> happens when two people edit the same lines differently. Git pauses and asks you to pick the correct version. Open the conflicted file, look for markers like <code class="text-accent">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, choose the right code, then commit the resolution.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Side-by-side diff view showing conflict markers and resolved merge]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 220" role="img" aria-labelledby="fig-conflict-title">
+                <title id="fig-conflict-title">Merge conflict resolution</title>
+                <text x="180" y="30" text-anchor="middle" fill="#f87171" font-size="11" font-weight="600">Before (conflict)</text>
+                <text x="540" y="30" text-anchor="middle" fill="#34d399" font-size="11" font-weight="600">After (resolved)</text>
+                <!-- Before -->
+                <rect x="30" y="45" width="300" height="155" rx="8" fill="#09090b" stroke="#7f1d1d"/>
+                <text x="45" y="68" fill="#71717a" font-size="9" font-family="monospace">1  function greet() {</text>
+                <text x="45" y="86" fill="#f87171" font-size="9" font-family="monospace">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</text>
+                <text x="45" y="104" fill="#fca5a5" font-size="9" font-family="monospace">2    return "Hello!";</text>
+                <text x="45" y="122" fill="#71717a" font-size="9" font-family="monospace">=======</text>
+                <text x="45" y="140" fill="#fca5a5" font-size="9" font-family="monospace">2    return "Hi there!";</text>
+                <text x="45" y="158" fill="#f87171" font-size="9" font-family="monospace">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature</text>
+                <text x="45" y="176" fill="#71717a" font-size="9" font-family="monospace">3  }</text>
+                <!-- Arrow -->
+                <text x="360" y="120" text-anchor="middle" fill="#6366f1" font-size="22">→</text>
+                <!-- After -->
+                <rect x="390" y="45" width="300" height="155" rx="8" fill="#09090b" stroke="#065f46"/>
+                <text x="405" y="68" fill="#71717a" font-size="9" font-family="monospace">1  function greet() {</text>
+                <text x="405" y="92" fill="#34d399" font-size="9" font-family="monospace">2    return "Hello there!";</text>
+                <text x="405" y="116" fill="#71717a" font-size="9" font-family="monospace">3  }</text>
+                <rect x="405" y="130" width="120" height="22" rx="4" fill="#064e3b" stroke="#34d399"/>
+                <text x="465" y="145" text-anchor="middle" fill="#6ee7b7" font-size="9">git add → commit</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Remove conflict markers, pick the correct code, then stage and commit the fix.</figcaption>
+            </figure>
           </div>
 
           <div id="quiz-repositories" class="quiz-container mt-10" data-section="repositories"></div>
@@ -304,7 +509,24 @@ git push origin main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>A <strong class="text-zinc-100">branch</strong> is an independent line of development. Imagine writing a draft chapter in a separate notebook while the published book stays untouched. When the draft is ready, you merge it back into the main story.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Branch diagram — main branch as a straight line, feature branch splitting off and merging back]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 200" role="img" aria-labelledby="fig-branch-title">
+                <title id="fig-branch-title">Git branching and merging</title>
+                <line x1="80" y1="140" x2="640" y2="140" stroke="#6366f1" stroke-width="3"/>
+                <text x="80" y="175" fill="#818cf8" font-size="10" font-weight="600">main</text>
+                <circle cx="120" cy="140" r="8" fill="#6366f1"/><circle cx="280" cy="140" r="8" fill="#6366f1"/>
+                <circle cx="480" cy="140" r="8" fill="#6366f1"/><circle cx="620" cy="140" r="8" fill="#34d399"/>
+                <!-- Feature branch -->
+                <path d="M 280 140 Q 280 80 380 60 Q 480 40 520 60 Q 560 80 480 140" fill="none" stroke="#34d399" stroke-width="2.5"/>
+                <circle cx="380" cy="60" r="8" fill="#34d399"/><circle cx="520" cy="60" r="8" fill="#34d399"/>
+                <text x="400" y="35" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">feature/login-page</text>
+                <text x="200" y="125" fill="#71717a" font-size="9">commit A</text>
+                <text x="380" y="125" fill="#71717a" font-size="9">branch off</text>
+                <text x="520" y="125" fill="#71717a" font-size="9">merge PR</text>
+                <text x="620" y="125" fill="#34d399" font-size="9">deploy</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Create a feature branch, work in isolation, then merge back into main when ready.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Branch Workflow</h3>
             <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-zinc-500"># Create and switch to a new branch</span>
@@ -341,7 +563,40 @@ git checkout main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>A <strong class="text-zinc-100">Pull Request (PR)</strong> is a formal proposal: "Here are my changes — please review before merging into main." It's the heart of team collaboration on GitHub, and it's where CI pipelines often run automatically.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Pull request UI mockup showing changed files, review comments, and CI check status]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 280" role="img" aria-labelledby="fig-pr-title">
+                <title id="fig-pr-title">Pull request review mockup</title>
+                <rect x="40" y="20" width="640" height="240" rx="10" fill="#18181b" stroke="#3f3f46"/>
+                <!-- Header -->
+                <rect x="40" y="20" width="640" height="45" rx="10" fill="#27272a"/>
+                <rect x="40" y="55" width="640" height="10" fill="#27272a"/>
+                <text x="60" y="48" fill="#e4e4e7" font-size="12" font-weight="600">Add login page #12</text>
+                <text x="560" y="48" fill="#71717a" font-size="10">feature/login → main</text>
+                <!-- CI checks -->
+                <rect x="60" y="75" width="600" height="40" rx="6" fill="#09090b" stroke="#27272a"/>
+                <circle cx="85" cy="95" r="8" fill="#34d399"/><text x="85" y="99" text-anchor="middle" fill="#09090b" font-size="8" font-weight="700">✓</text>
+                <text x="105" y="99" fill="#a1a1aa" font-size="10">CI / test (passing)</text>
+                <circle cx="220" cy="95" r="8" fill="#34d399"/><text x="220" y="99" text-anchor="middle" fill="#09090b" font-size="8" font-weight="700">✓</text>
+                <text x="240" y="99" fill="#a1a1aa" font-size="10">lint (passing)</text>
+                <!-- Files changed -->
+                <text x="60" y="135" fill="#71717a" font-size="10" font-weight="600">Files changed (3)</text>
+                <rect x="60" y="145" width="280" height="22" rx="4" fill="#064e3b" stroke="#34d399"/>
+                <text x="70" y="160" fill="#6ee7b7" font-size="9" font-family="monospace">+ login.html</text>
+                <rect x="60" y="172" width="280" height="22" rx="4" fill="#312e81" stroke="#6366f1"/>
+                <text x="70" y="187" fill="#c7d2fe" font-size="9" font-family="monospace">M styles.css</text>
+                <!-- Review comment -->
+                <rect x="370" y="145" width="290" height="70" rx="6" fill="#09090b" stroke="#3f3f46"/>
+                <circle cx="395" cy="168" r="12" fill="#6366f1"/><text x="395" y="172" text-anchor="middle" fill="#fff" font-size="8">SR</text>
+                <text x="415" y="165" fill="#e4e4e7" font-size="10" font-weight="600">Sam reviewed</text>
+                <text x="415" y="182" fill="#a1a1aa" font-size="9">"Looks good — nice error handling!"</text>
+                <rect x="415" y="195" width="80" height="18" rx="4" fill="#064e3b" stroke="#34d399"/>
+                <text x="455" y="207" text-anchor="middle" fill="#34d399" font-size="8">Approved ✓</text>
+                <!-- Merge button -->
+                <rect x="60" y="220" width="100" height="28" rx="6" fill="#6366f1"/>
+                <text x="110" y="238" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">Merge pull request</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Pull requests show diffs, run CI checks, collect reviews, and merge when ready.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">The PR Lifecycle</h3>
             <ol class="list-decimal pl-6 space-y-2">
@@ -368,7 +623,36 @@ git checkout main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p><strong class="text-zinc-100">GitHub Actions</strong> lets you automate tasks when things happen in your repository — push code, open a PR, schedule a cron job. GitHub spins up a temporary virtual machine (called a <strong class="text-zinc-100">runner</strong>), runs your instructions, and reports pass/fail.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: GitHub Actions architecture — Event triggers Workflow → Jobs → Steps on Runners]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 220" role="img" aria-labelledby="fig-actions-title">
+                <title id="fig-actions-title">GitHub Actions architecture</title>
+                <defs>
+                  <marker id="arrow-actions" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#818cf8"/></marker>
+                </defs>
+                <rect x="30" y="80" width="110" height="60" rx="8" fill="#18181b" stroke="#52525b"/>
+                <text x="85" y="105" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Event</text>
+                <text x="85" y="122" text-anchor="middle" fill="#71717a" font-size="9">push, PR…</text>
+                <line x1="140" y1="110" x2="165" y2="110" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-actions)"/>
+                <rect x="170" y="80" width="110" height="60" rx="8" fill="#18181b" stroke="#6366f1"/>
+                <text x="225" y="105" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">Workflow</text>
+                <text x="225" y="122" text-anchor="middle" fill="#71717a" font-size="9">.yml file</text>
+                <line x1="280" y1="110" x2="305" y2="110" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-actions)"/>
+                <rect x="310" y="80" width="110" height="60" rx="8" fill="#18181b" stroke="#6366f1"/>
+                <text x="365" y="105" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">Job</text>
+                <text x="365" y="122" text-anchor="middle" fill="#71717a" font-size="9">test, deploy</text>
+                <line x1="420" y1="110" x2="445" y2="110" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-actions)"/>
+                <rect x="450" y="60" width="240" height="100" rx="8" fill="#18181b" stroke="#34d399"/>
+                <text x="570" y="82" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Steps on Runner</text>
+                <rect x="470" y="95" width="60" height="28" rx="4" fill="#27272a" stroke="#3f3f46"/>
+                <text x="500" y="113" text-anchor="middle" fill="#a1a1aa" font-size="8">checkout</text>
+                <rect x="540" y="95" width="60" height="28" rx="4" fill="#27272a" stroke="#3f3f46"/>
+                <text x="570" y="113" text-anchor="middle" fill="#a1a1aa" font-size="8">npm test</text>
+                <rect x="610" y="95" width="60" height="28" rx="4" fill="#27272a" stroke="#3f3f46"/>
+                <text x="640" y="113" text-anchor="middle" fill="#a1a1aa" font-size="8">deploy</text>
+                <text x="570" y="145" text-anchor="middle" fill="#71717a" font-size="9">ubuntu-latest VM</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Events trigger workflows; jobs run on cloud runners as a series of steps.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Core Terminology</h3>
             <div class="space-y-3">
@@ -409,7 +693,52 @@ git checkout main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>A <strong class="text-zinc-100">CI pipeline</strong> typically: checks out your code, installs dependencies, runs linters, runs tests, and maybe builds the project. If any step fails, the workflow turns red and the PR is blocked from merging.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: CI pipeline stages — Checkout → Install → Lint → Test → Build, with pass/fail indicators]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 180" role="img" aria-labelledby="fig-ci-stages-title">
+                <title id="fig-ci-stages-title">CI pipeline stages</title>
+                <defs>
+                  <marker id="arrow-ci" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#34d399"/></marker>
+                </defs>
+                <g>
+                  <rect x="20" y="60" width="110" height="70" rx="8" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="75" y="92" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Checkout</text>
+                  <text x="75" y="110" text-anchor="middle" fill="#71717a" font-size="9">clone repo</text>
+                  <circle cx="75" cy="45" r="9" fill="#34d399"/><text x="75" y="49" text-anchor="middle" fill="#09090b" font-size="9" font-weight="700">✓</text>
+                </g>
+                <line x1="130" y1="95" x2="145" y2="95" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-ci)"/>
+                <g>
+                  <rect x="150" y="60" width="110" height="70" rx="8" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="205" y="92" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Install</text>
+                  <text x="205" y="110" text-anchor="middle" fill="#71717a" font-size="9">npm ci</text>
+                  <circle cx="205" cy="45" r="9" fill="#34d399"/><text x="205" y="49" text-anchor="middle" fill="#09090b" font-size="9" font-weight="700">✓</text>
+                </g>
+                <line x1="260" y1="95" x2="275" y2="95" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-ci)"/>
+                <g>
+                  <rect x="280" y="60" width="110" height="70" rx="8" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="335" y="92" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Lint</text>
+                  <text x="335" y="110" text-anchor="middle" fill="#71717a" font-size="9">style checks</text>
+                  <circle cx="335" cy="45" r="9" fill="#34d399"/><text x="335" y="49" text-anchor="middle" fill="#09090b" font-size="9" font-weight="700">✓</text>
+                </g>
+                <line x1="390" y1="95" x2="405" y2="95" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-ci)"/>
+                <g>
+                  <rect x="410" y="60" width="110" height="70" rx="8" fill="#18181b" stroke="#3f3f46"/>
+                  <text x="465" y="92" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Test</text>
+                  <text x="465" y="110" text-anchor="middle" fill="#71717a" font-size="9">unit tests</text>
+                  <circle cx="465" cy="45" r="9" fill="#34d399"/><text x="465" y="49" text-anchor="middle" fill="#09090b" font-size="9" font-weight="700">✓</text>
+                </g>
+                <line x1="520" y1="95" x2="535" y2="95" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-ci)"/>
+                <g>
+                  <rect x="540" y="60" width="110" height="70" rx="8" fill="#18181b" stroke="#34d399"/>
+                  <text x="595" y="92" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">Build</text>
+                  <text x="595" y="110" text-anchor="middle" fill="#71717a" font-size="9">bundle app</text>
+                  <circle cx="595" cy="45" r="9" fill="#34d399"/><text x="595" y="49" text-anchor="middle" fill="#09090b" font-size="9" font-weight="700">✓</text>
+                </g>
+                <line x1="650" y1="95" x2="665" y2="95" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-ci)"/>
+                <rect x="670" y="75" width="40" height="40" rx="20" fill="#064e3b" stroke="#34d399"/>
+                <text x="690" y="100" text-anchor="middle" fill="#34d399" font-size="16" font-weight="700">✓</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Each stage must pass — a single failure stops the pipeline and blocks the merge.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Example: Node.js CI</h3>
             <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-violet-400">name:</span> Node CI
@@ -444,7 +773,31 @@ git checkout main</code></pre>
           <div class="prose-custom space-y-6 text-zinc-300 leading-relaxed">
             <p>Once CI passes, <strong class="text-zinc-100">Continuous Deployment</strong> takes over — automatically publishing your site or app. <strong class="text-zinc-100">GitHub Pages</strong> is perfect for static sites (HTML, CSS, JS) like this very tutorial.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: CD flow — merge to main → Actions deploy job → GitHub Pages URL goes live]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 200" role="img" aria-labelledby="fig-cd-title">
+                <title id="fig-cd-title">Continuous deployment to GitHub Pages</title>
+                <defs>
+                  <marker id="arrow-cd" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#818cf8"/></marker>
+                </defs>
+                <rect x="30" y="70" width="130" height="65" rx="8" fill="#18181b" stroke="#6366f1"/>
+                <text x="95" y="98" text-anchor="middle" fill="#6366f1" font-size="10" font-weight="600">Merge to main</text>
+                <text x="95" y="115" text-anchor="middle" fill="#71717a" font-size="9">PR approved ✓</text>
+                <line x1="160" y1="102" x2="185" y2="102" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-cd)"/>
+                <rect x="190" y="70" width="150" height="65" rx="8" fill="#18181b" stroke="#6366f1"/>
+                <text x="265" y="95" text-anchor="middle" fill="#e4e4e7" font-size="10" font-weight="600">Actions: deploy job</text>
+                <text x="265" y="112" text-anchor="middle" fill="#71717a" font-size="9">upload artifact</text>
+                <line x1="340" y1="102" x2="365" y2="102" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-cd)"/>
+                <rect x="370" y="70" width="150" height="65" rx="8" fill="#18181b" stroke="#34d399"/>
+                <text x="445" y="95" text-anchor="middle" fill="#34d399" font-size="10" font-weight="600">GitHub Pages</text>
+                <text x="445" y="112" text-anchor="middle" fill="#71717a" font-size="9">host static files</text>
+                <line x1="520" y1="102" x2="545" y2="102" stroke="#818cf8" stroke-width="2" marker-end="url(#arrow-cd)"/>
+                <rect x="550" y="55" width="150" height="95" rx="8" fill="#312e81" stroke="#818cf8"/>
+                <text x="625" y="85" text-anchor="middle" fill="#c7d2fe" font-size="10" font-weight="600">🌐 Live URL</text>
+                <text x="625" y="105" text-anchor="middle" fill="#a1a1aa" font-size="8" font-family="monospace">you.github.io/repo</text>
+                <text x="625" y="125" text-anchor="middle" fill="#34d399" font-size="9">HTTPS enabled</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Merge triggers a deploy workflow that publishes your site to GitHub Pages automatically.</figcaption>
+            </figure>
 
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Deploy with GitHub Actions</h3>
             <pre class="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm font-mono overflow-x-auto"><code><span class="text-violet-400">name:</span> Deploy to Pages
@@ -471,7 +824,37 @@ git checkout main</code></pre>
             <h3 class="text-xl font-semibold text-zinc-100 mt-8 mb-3">Secrets in CI/CD</h3>
             <p>Never hardcode API keys in workflow files. Store them in <strong class="text-zinc-100">Repository Secrets</strong> (<code class="text-accent">Settings → Secrets → Actions</code>) and reference them as <code class="text-accent">${{ secrets.MY_KEY }}</code>.</p>
 
-            <p>[[VISUAL_PLACEHOLDER: Secrets flow diagram — encrypted in GitHub Settings, injected at runtime into workflow, never logged]]</p>
+            <figure class="diagram my-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 overflow-x-auto">
+              <svg viewBox="0 0 720 220" role="img" aria-labelledby="fig-secrets-title">
+                <title id="fig-secrets-title">GitHub Secrets flow</title>
+                <defs>
+                  <marker id="arrow-secret" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#818cf8"/></marker>
+                </defs>
+                <!-- Settings -->
+                <rect x="40" y="50" width="160" height="120" rx="10" fill="#18181b" stroke="#6366f1"/>
+                <text x="120" y="78" text-anchor="middle" fill="#6366f1" font-size="11" font-weight="600">GitHub Settings</text>
+                <text x="120" y="96" text-anchor="middle" fill="#71717a" font-size="9">Secrets → Actions</text>
+                <rect x="65" y="110" width="110" height="40" rx="6" fill="#312e81" stroke="#6366f1"/>
+                <text x="120" y="128" text-anchor="middle" fill="#c7d2fe" font-size="9">🔒 API_KEY</text>
+                <text x="120" y="142" text-anchor="middle" fill="#71717a" font-size="8">encrypted at rest</text>
+                <!-- Encrypted transport -->
+                <line x1="200" y1="110" x2="280" y2="110" stroke="#818cf8" stroke-width="2" stroke-dasharray="6 3" marker-end="url(#arrow-secret)"/>
+                <text x="240" y="100" text-anchor="middle" fill="#818cf8" font-size="9">injected at runtime</text>
+                <!-- Workflow -->
+                <rect x="285" y="50" width="180" height="120" rx="10" fill="#18181b" stroke="#3f3f46"/>
+                <text x="375" y="78" text-anchor="middle" fill="#e4e4e7" font-size="11" font-weight="600">Workflow (.yml)</text>
+                <rect x="305" y="95" width="140" height="55" rx="4" fill="#09090b" stroke="#27272a"/>
+                <text x="315" y="115" fill="#71717a" font-size="8" font-family="monospace">env:</text>
+                <text x="315" y="132" fill="#34d399" font-size="8" font-family="monospace">KEY: ${{ secrets.API_KEY }}</text>
+                <!-- Never logged -->
+                <line x1="465" y1="110" x2="520" y2="110" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-secret)"/>
+                <rect x="525" y="70" width="160" height="80" rx="10" fill="#18181b" stroke="#065f46"/>
+                <text x="605" y="100" text-anchor="middle" fill="#34d399" font-size="11" font-weight="600">Runner uses value</text>
+                <text x="605" y="120" text-anchor="middle" fill="#71717a" font-size="9">never printed in logs</text>
+                <text x="605" y="138" text-anchor="middle" fill="#f87171" font-size="9">✕ never commit to git</text>
+              </svg>
+              <figcaption class="text-xs text-zinc-500 text-center mt-3">Secrets live encrypted in GitHub Settings and are injected into workflows — never stored in code.</figcaption>
+            </figure>
 
             <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-sm mt-6">
               <p class="text-amber-300 font-medium">🎉 Congratulations! You now understand the full journey: write code with Git, collaborate on GitHub, automate quality with Actions, and ship with CI/CD.</p>
