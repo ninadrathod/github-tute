@@ -433,9 +433,9 @@ const MCQS = {
     },
     {
       q: 'Who can comment on a public repository PR?',
-      options: ['Only GitHub employees', 'No one', 'Only bots', 'Depends on permissions — often collaborators; public repos may allow broader discussion per settings'],
+      options: ['Only GitHub employees', 'No one', 'Only bots', 'Anyone with a GitHub account can usually comment, depending on repository settings'],
       answer: 3,
-      explanation: 'Comment permissions vary by repo visibility and organization settings, but PRs are designed for discussion.',
+      explanation: 'On most public repositories, any logged-in GitHub user can comment on pull requests. Organizations may restrict this with permissions or policies.',
     },
     {
       q: 'Merging a PR into main without CI passing is risky because:',
@@ -544,10 +544,10 @@ const MCQS = {
       explanation: 'Matrix builds test combinations like Node 18/20 or Ubuntu/Windows concurrently.',
     },
     {
-      q: 'When should CI run on pull requests?',
+      q: 'Why should CI run on pull requests?',
       options: ['Only after deployment', 'To validate proposed changes before they merge into main', 'Never for security', 'Only on deleted branches'],
       answer: 1,
-      explanation: 'PR-triggered CI gives fast feedback to authors and blocks merging if checks fail (when protected).',
+      explanation: 'PR-triggered CI gives fast feedback to authors and blocks merging if checks fail (when branch protection is enabled).',
     },
     {
       q: 'A failed CI check on a PR should prompt the author to:',
